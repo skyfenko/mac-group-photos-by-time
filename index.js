@@ -7,7 +7,7 @@ const mapping = {};
 const walkAndMap = (locale, dateFormat) => {
     console.log(`set locale to ${moment.locale(locale)}`);
 
-    return function (err, pathname, dirent) {
+    return async function (err, pathname, dirent) {
         if (err) {
             throw err;
         }
@@ -21,7 +21,7 @@ const walkAndMap = (locale, dateFormat) => {
             const parsedFolderTime = moment(dirent.name, dateFormat);
             const newFolderPath = parsedFolderTime.format('YYYY/MM/DD');
 
-            // ignore parent directory
+            // ignore parent directory and work with subfolders only
             if (!isNaN(parsedFolderTime.year())) {
 
                 // map current folder path to new structure
@@ -36,6 +36,7 @@ const walkAndMap = (locale, dateFormat) => {
     }
 }
 
+// create subfolders recursively if they don't exist
 const makeDirRecursively = (folder, subFolders) => {
 
     if (subFolders.length > 0) {
@@ -49,6 +50,7 @@ const makeDirRecursively = (folder, subFolders) => {
     }
 }
 
+// move directories into year/month/day directories
 const move = (parentFolder) => {
     Object.keys(mapping).forEach(key => {
         const subFolders = key.split("/");
@@ -57,9 +59,8 @@ const move = (parentFolder) => {
         const newPath = parentFolder + "/" + key;
 
         mapping[key].forEach(oldPath => {
-            fs.rename(oldPath, newPath, (err) => {
+            fs.rename(parentFolder + "/" + oldPath, newPath, (err) => {
                 if (err) throw err;
-                console.log('Rename complete!');
             });
         })
 
@@ -67,10 +68,12 @@ const move = (parentFolder) => {
 }
 
 
+// walk all the directories under <path>, parse names with given <locale> and <dateFormat>
+// then move them into directories following the pattern year/month/day
 const walkDirsAndMove = async (path, locale = 'en', dateFormat = 'DD MMMM YYYY') => {
     await walk(path, walkAndMap(locale, dateFormat));
     move(path)
     console.log("Done");
 }
 
-walkDirsAndMove("/Users/stan/Desktop/export");
+// walkDirsAndMove("/Users/stan/Desktop/export");
