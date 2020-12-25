@@ -1,0 +1,31 @@
+{
+  "name": "mac-group-photos-by-time",
+  "version": "1.0.0",
+  "description": "Application helps organise photos, exported from Photos on Mac, by time (years, months, days)",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skyfenko/mac-group-photos-by-time.git"
+  },
+  "keywords": [
+    "node",
+    "mac",
+    "photos"
+  ],
+  "author": "Stan Kyfenko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/skyfenko/mac-group-photos-by-time/issues"
+  },
+  "homepage": "https://github.com/skyfenko/mac-group-photos-by-time#readme",
+  "dependencies": {
+    "@root/walk": "^1.1.0",
+    "moment": "^2.29.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
