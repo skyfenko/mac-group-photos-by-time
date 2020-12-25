@@ -77,3 +77,4 @@ const walkDirsAndMove = async (path, locale = 'en', dateFormat = 'DD MMMM YYYY')
 }
 
 // walkDirsAndMove("/Users/stan/Desktop/export");
+walkDirsAndMove("YOUR_FOLDER_HERE");
